@@ -1,0 +1,22 @@
+NOTES
+'  * Column “Only check if”: if this condition is not true, don''t need to check. A blank in this column implies the specified Target must exist.'
+'  * "Y" in CF 1.6 column means CF tests in IOOS checker perform this test, "(Y)" means test is not quite the same'
+'  * "Y" in ACDD 1.1 column means ACDD tests in IOOS checker perform this test, "(Y)" means test is not quite the same'
+'  * <COORD> refers to all *coordinate variables*, defined as a one-dimensional variable with the same name as its dimension. CF definition: http://cfconventions.org/Data/cf-conventions/cf-conventions-1.6/build/cf-conventions.html#terminology'
+'  * <DATA> refers to all *data variables*, defined as any variable that'
+    1) has a numeric type;
+    2) has no "axis" attribute;
+'    3) doesn''t have the same name as a dimension; AND'
+    4) is not named in any "ancillary_variables" attribute in the file.
+'  * compliance_checker/cf/cf.py has helper functions that identify coordinate, ancillary and data variables'
+'  * <QC> refers to all *quality control variables*, defined as any variable that'
+    1) has a name ending in "_quality_control"
+    2) is named as in the "ancillary_variables" attribute of another variable
+    3) standard_name ends in "status_flag" OR long_name contains "status_flag" or "quality flag"??
+    4) *????*
+  * The above definition for QC variables will completely miss those that are incorrectly named or not associated to a variable via the ancillary_variables attribute
+  * I have ignored most optional attributes for now
+
+Highlighting
+Question – to be discussed...
+Potential clash with IOOS CF checker

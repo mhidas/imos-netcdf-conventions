@@ -1,0 +1,118 @@
+Test type,Target,Check that,Only check if,CF 1.6,ACDD 1.1,Comments / questions
+attribute,<all string attributes>,not empty,,,,Global and variable attributes.
+,,,,,,
+global attribute,project,value is "Integrated Marine Observing System (IMOS)",,,,
+global attribute,Conventions,value includes "CF-1.6” and “IMOS-1.3",,N!,,The CF checker wants this to be "CF-1.6" - might need changing!
+global attribute,title,is a string,,(Y),(Y),'CF checker checks type only, ACDD checks exists'
+,,,,,,
+global attribute,date_created,value is valid timestamp "YYYY-MM-DDThh:mm:ssZ",,,,
+global attribute,abstract,is a string,,,,
+,,,,,,
+global attribute,naming_authority,value is "IMOS",,,,
+global attribute,geospatial_lat_min/max,'value matches latitude range in data, numeric type',,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. QC not taken into account! '
+global attribute,geospatial_lon_min/max,'value matches longitude range in data, numeric type',,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. QC not taken into account! '
+global attribute,geospatial_vertical_min/max,value matches depth/height range in data,if vertical coordinate variable exists,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. Fails if no vertical coordinate variable. QC not taken into account! '
+global attribute,time_coverage_start/end,'value matches time range in data, format "YYYY-MM-DDThh:mm:ssZ"',,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. QC not taken into account! '
+global attribute,data_centre,value is "eMarine Information Infrastructure (eMII)",,,,
+global attribute,data_centre_email,value is "info@emii.org",,,,
+global attribute,author,is a string,,,,
+global attribute,principal_investigator,is a string,,,,
+global attribute,citation,is a string,,,,Not checking value for now
+global attribute,acknowledgement,value includes text specified in NetCDF manual,,,,'"Data was sourced from the Integrated Marine Observing System (IMOS) – IMOS is supported by the Australian Government through the National Collaborative Research Infrastructure Strategy (NCRIS) and the Super Science Initiative (SSI)."  –  May need to look for sub-strings, as there are a couple of variants on this text.'
+global attribute,distribution_statement,value includes text specified in NetCDF manual,,,,'“Data may be re-used, provided that related metadata explaining the data has been reviewed by the user, and the data is appropriately acknowledged. Data, products and services from IMOS are provided "as is" without any warranty as to fitness for a particular purpose.”'
+global attribute,netcdf_version,value matches the NetCDF version of the file,if exists,,,Guillaume to CHECK
+global attribute,file_version,value matches one of 3 possible values,if exists,,,'"Level 0 - Raw data", "Level 1 - Quality Controlled data", "Level 2 - Derived product"'
+global attribute,geospatial_lat_units,value is “degrees_north”,if exists,,,
+global attribute,geospatial_lon_units,value is “degrees_east”,if exists,,,
+global attribute,geospatial_vertical_units,value is a valid CF unit for depth,if exists,,,
+global attribute,geospatial_vertical_positive,value is "up" or "down",if exists,,,
+global attribute,local_time_zone,'value between -12. and 12., numeric type',if exists,,,
+global attribute,author_email,value looks like an email address,if exists,,,
+global attribute,principal_investigator_email,value looks like an email address,if exists,,,
+global attribute,quality_control_set,'value is one of (1, 2, 3, 4), integer type',if exists,,,
+,,,,,,
+variable attribute,<VAR>:_FillValue,has same data type as the variable,if exists,,,<VAR> refers to any variable
+variable attribute,<VAR>:valid_min,has same data type as the variable,if exists,,,Would it be enough to have a numerical type?
+variable attribute,<VAR>:valid_max,has same data type as the variable,if exists,,,Would it be enough to have a numerical type?
+,,,,,,
+variable,<COORD>,'has numeric type (byte, float, integer)',,,,'<COORD> refers to all coordinate variables, defined as a one-dimensional variable with the same name as its dimension. compliance_checker/cf/util.py has helper functions to identify coordinate variables'
+variable,<COORD>,order of values is strictly monotonic,,,,i.e. values are unique and always increasing or always decreasing
+,,,,,,
+variable,<TIME>,is type Double,if exists,,,'For now it is not mandatory to have a time variable. Use helper function is_time_variable (in cf/util.py) to identify a <TIME> variable (uses variable name = “time” (case-insensitive) OR standard_name="time" OR axis="T" OR units are time units). It doesn''t have to be called “TIME”.'
+variable attribute,<TIME>:standard_name,value is "time",if <TIME> exists,,,
+variable attribute,<TIME>:long_name,value includes the word "time" (case insensitive),if <TIME> exists,,,
+variable attribute,<TIME>:units,value is a valid CF time unit,if <TIME> exists,Y,,Preferred reference date is 1950-01-01
+variable attribute,<TIME>:axis,value is "T",if <TIME> exists,(Y),,'CF checker checks value if axis exists, but ignores it if it doesn''t exist'
+variable attribute,<TIME>:valid_min,exists,if <TIME> exists,,,
+variable attribute,<TIME>:valid_max,exists,if <TIME> exists,,,
+variable attribute,<TIME>:calendar,value is "gregorian",if <TIME> exists,(Y),,CF checker checks existence and valid value (any calendar) with LOW priority only.
+,,,,,,
+variable,<LONGITUDE>,is type Double or Float,if exists,,,'For now it is not mandatory to have a longitude variable. <LONGITUDE> is any variable that has 1) variable name in _possiblex list (cf/util.py), OR  2) standard_name="longitude", OR  3) axis="X", OR  4) units in _possiblexunits list. It doesn''t have to be called “LONGITUDE”.'
+variable attribute,<LONGITUDE>:standard_name,value is "longitude",if <LONGITUDE> exists,,,
+variable attribute,<LONGITUDE>:long_name,value includes the word "longitude" (case insensitive),if <LONGITUDE> exists,,,
+variable attribute,<LONGITUDE>:units,value is "degrees_east",if <LONGITUDE> exists,(Y),,CF checker allows variants like “degrees_E”
+variable attribute,<LONGITUDE>:axis,value is "X",if <LONGITUDE> exists,(Y),,'CF checker checks value if axis exists, but ignores it if it doesn''t exist'
+variable attribute,<LONGITUDE>:valid_min,'value of (valid_min, valid_max) is (0, 360) OR (-180, 10)',if <LONGITUDE> exists,,,
+variable attribute,<LONGITUDE>:valid_max,'value of (valid_min, valid_max) is (0, 360) OR (-180, 10)',if <LONGITUDE> exists,,,
+variable attribute,<LONGITUDE>:reference_datum,is a string,if <LONGITUDE> exists,,,'We''ll check values in a future version'
+,,,,,,
+variable,<LATITUDE>,is type Double or Float,if exists,,,'For now it is not mandatory to have a latitude variable. <LATITUDE> is any variable that has 1) variable name in _possibley list (cf/util.py), OR  2) standard_name="latitude", OR  3) axis="Y", OR  4) units in _possibleyunits list. It doesn''t have to be called “LATITUDE”.'
+variable attribute,<LATITUDE>:standard_name,value is "latitude",if <LATITUDE> exists,,,
+variable attribute,<LATITUDE>:long_name,value includes the word "latitude" (case insensitive),if <LATITUDE> exists,,,
+variable attribute,<LATITUDE>:units,value is "degrees_north",if <LATITUDE> exists,(Y),,CF checker allows variants like “degree_N”
+variable attribute,<LATITUDE>:axis,value is "Y",if <LATITUDE> exists,(Y),,'CF checker checks value if axis exists, but ignores it if it doesn''t exist'
+variable attribute,<LATITUDE>:valid_min,value is -90.,if <LATITUDE> exists,,,
+variable attribute,<LATITUDE>:valid_max,value is  90.,if <LATITUDE> exists,,,
+variable attribute,<LATITUDE>:reference_datum,is a string,if <LATITUDE> exists,,,'We''ll check values in a future version'
+,,,,,,
+variable,<VERTICAL>,is type Double or Float,if exists,,,'For now it is not mandatory to have a vertical coordinate variable. Use a helper function similar to is_vertical_coordinate (in cf/util.py) to identify a <VERTICAL> variable, but exclude pressure vars (i.e. variable name or standard_name is “depth” or “height” (case-insensitive), OR axis="Z", OR positive attribute is “up” or “down”). It doesn''t have to be called “DEPTH” or “HEIGHT”.'
+variable attribute,<VERTICAL>:standard_name,value is "depth" or “height”,if <VERTICAL> exists,,,
+variable attribute,<VERTICAL>:long_name,value includes the standard_name (case insensitive),if <VERTICAL> exists,,,
+variable attribute,<VERTICAL>:units,value is a valid CF distance unit,if <VERTICAL> exists,(Y),,'CF checker doesn''t accept “metre” or “metres” (only “m” or US spelling)'
+variable attribute,<VERTICAL>:axis,value is "Z",if <VERTICAL> exists,(Y),,'CF checker checks value if axis exists, but ignores it if it doesn''t exist'
+variable attribute,<VERTICAL>:positive,'value is "down" or “up”, consistent with standard_name',if <VERTICAL> exists,,,'“down” for standard_name “depth, “up” for “height”'
+variable attribute,<VERTICAL>:valid_min,exists,if <VERTICAL> exists,,,
+variable attribute,<VERTICAL>:valid_max,exists,if <VERTICAL> exists,,,
+variable attribute,<VERTICAL>:reference_datum,is a string,if <VERTICAL> exists,,,'We''ll check values in a future version'
+,,,,,,
+variable,<DATA>,at least one data variable exists in the file,,,,'Not mentioned in the manual, but a reasonable basic check. Use CFBaseCheck._find_data_vars (in cf/cf.py) to identify all <DATA> variables, i.e. vars that are not coordinate or anciallary variables.'
+variable,<DATA>,'has at least one of the dimensions (time, lat, lon, depth)',,,,'Not mentioned in the manual, but a reasonable basic check. Can''t be any more specific until we look at featureType'
+variable attribute,<DATA>:standard_name,value is valid CF standard name,if exists,Y,,
+variable attribute,<DATA>:long_name,is a string,,,,
+variable attribute,<DATA>:units,is a string,if standard_name exists,,,'For dimensionless quantities, CF only allows a few options (“1”, “percent”, “1e-3”), otherwise attribute should not be present.'
+variable attribute,<DATA>:units,value is a valid CF unit,if exists,Y,,'CF checker does check, but doesn''t seem to allow commonly used equivalents (e.g. "Celsius")'
+variable attribute,<DATA>:_FillValue,has same data type as the variable,,,,
+variable attribute,<DATA>:valid_min,has same data type as the variable,if exists,,,
+variable attribute,<DATA>:valid_max,has same data type as the variable,if exists,,,
+variable attribute,<DATA>:ancillary_variables,all variables listed in value exist in file,if exists,Y,,
+variable attribute,<DATA>:quality_control_set,'value is one of (1, 2, 3, 4), integer type',if exists,,,
+,,,,,,
+variable,<QC>,variable name matches “<DATA>_quality_control” for a variable in the file named  “<DATA>”,if exists,,,'<QC> is any quality-control variable. Identify these as any variable that 1) has a name that ends in “_quality_control”, OR 2) standard_name ends in "status_flag" OR long_name contains "status_flag" or "quality flag",  OR 3) has a flag_values, or flag_meanings attribute. The associated <DATA> variable is defined by this rule.'
+variable,<QC>,has same dimensions as associated <DATA> variable,if exists,,,
+variable attribute,<QC>:standard_name,value = (standard_name of the <DATA> variable) + "status_flag",if <DATA>:standard_name exists,(Y),,'CF checker validates standard_name but doesn''t require it to exist or have "status_flag"'
+variable attribute,<QC>:long_name,is a string,if <QC> exists,,,
+variable attribute,<QC>:quality_control_set,'value is one of (1, 2, 3, 4), integer type',if <QC> exists,,,
+variable attribute,<QC>:quality_control_conventions,value matches description corresponding to quality_control_set,if <QC> exists,,,'1:“IMOS standard set using the IODE flags”,  2:“ARGO quality control procedure”,  3:“BOM (SST and Air-Sea flux) quality control procedure”,  4:“WOCE quality control procedure (Multidisciplinary Underway Network
+– CO 2 measurements)”  (from IMOS NetCDF manual v1.3, Reference Table B, p.49)'
+variable attribute,<QC>:valid_min,exists,if <QC> exists,,,We may remove this later...
+variable attribute,<QC>:valid_max,exists,if <QC> exists,,,We may remove this later...
+variable attribute,<QC>:flag_values,is a list of values of the same type as the <QC> variable,if <QC> exists,Y,,
+variable attribute,<QC>:flag_values,Check that values match the quality_control_set specified,if <QC> exists,,,'IMOS NetCDF manual v1.3, Reference Tables C, D, F, G'
+variable attribute,<QC>:flag_meanings,'is a string of blank-separated meanings, same number as flag_values',if <QC> exists,Y,,
+variable attribute,<QC>:flag_meanings,Check that meanings match the quality_control_set specified,if <QC> exists,,,'IMOS NetCDF manual v1.3, Reference Tables C, D, F, G'
+,,,,,,
+file name,file name,extension is "nc",,,,
+file name,file name,'name contains 6 to 10 fields, separated by "_"',,,,Not including extension. Fields made up of characters [a-zA-Z0-9-].
+file name,file name,Field 1 is "IMOS",,,,
+file name,file name,Field 2 is a valid facility/sub-facility code,,,,'IMOS Filenaming convention, Ref Table 1. Matches "institution" global attribute?'
+file name,file name,Field 3 is made up of the characters "ABCEFGIKMOPRSTUVWZ",,,,'IMOS Filenaming convention, Ref Table 2. Check against variables in the file??'
+file name,file name,'Field 4 matches time_coverage_start attribute, format "YYYYMMDDTHHMMSSZ"',,,,
+file name,file name,Field 5 is a valid IMOS platform code,,,,'IMOS Filenaming convention, Ref Table 3. Should be in database!'
+file name,file name,Field 5 matches platform_code or site_code global attribute,if attributes exist,,,'Conventions doc says platform code, but we use site_code for ANMN files.'
+file name,file name,'Field 6 is one of ("FV00", "FV01", "FV02")',,,,
+file name,file name,Field 6 consistent with file_version attribute,if file_version exists,,,Field should be “FV0X” where file_version starts with "Level X"
+file name,file name,Field >6 meets one of the following conditions,if exists,,,Each condition must only match one field!
+file name,file name,1) is a non-empty string (product type),if exists,,,Value is facility-specific
+file name,file name,'2) matches time_coverage_end attribute, format "END-YYYYMMDDTHHMMSSZ"',if exists,,,
+file name,file name,'3) matches date_created attribute, format "C-YYYYMMDDTHHMMSSZ"',if exists,,,
+file name,file name,4) matches regexp "PART\d+",if exists,,,
