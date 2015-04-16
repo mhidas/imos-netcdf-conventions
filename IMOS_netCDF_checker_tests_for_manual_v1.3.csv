@@ -14,7 +14,7 @@ HIGH,global attribute,geospatial_lon_min/max,'value matches longitude range in d
 HIGH,global attribute,geospatial_vertical_min/max,value matches depth/height range in data,if <VERTICAL> exists,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. Fails if no vertical coordinate variable. QC not taken into account! '
 HIGH,global attribute,time_coverage_start/end,'value matches time range in data, format "YYYY-MM-DDThh:mm:ssZ"',if <TIME> exists,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. QC not taken into account! '
 HIGH,global attribute,data_centre,value is "eMarine Information Infrastructure (eMII)",,,,
-HIGH,global attribute,data_centre_email,value is "info@emii.org",,,,
+HIGH,global attribute,data_centre_email,value is "info@emii.org.au”,,,,
 HIGH,global attribute,author,is a string,,,,
 HIGH,global attribute,principal_investigator,is a string,,,,
 HIGH,global attribute,citation,is a string,,,,Not checking value for now
@@ -57,8 +57,8 @@ HIGH,variable attribute,<LONGITUDE>:standard_name,value is "longitude",if <LONGI
 LOW,variable attribute,<LONGITUDE>:long_name,value includes the word "longitude" (case insensitive),if <LONGITUDE> exists,,,
 MED,variable attribute,<LONGITUDE>:units,value is "degrees_east",if <LONGITUDE> exists,(Y),,CF checker allows variants like “degrees_E”
 HIGH,variable attribute,<LONGITUDE>:axis,value is "X",if <LONGITUDE> exists,(Y),,'CF checker checks value if axis exists, but ignores it if it doesn''t exist'
-HIGH,variable attribute,<LONGITUDE>:valid_min,'value of (valid_min, valid_max) is (0, 360) OR (-180, 10)',if <LONGITUDE> exists,,,
-HIGH,variable attribute,<LONGITUDE>:valid_max,'value of (valid_min, valid_max) is (0, 360) OR (-180, 10)',if <LONGITUDE> exists,,,
+HIGH,variable attribute,<LONGITUDE>:valid_min,'value of (valid_min, valid_max) is (0, 360) OR (-180, 180)',if <LONGITUDE> exists,,,
+HIGH,variable attribute,<LONGITUDE>:valid_max,'value of (valid_min, valid_max) is (0, 360) OR (-180, 180)',if <LONGITUDE> exists,,,
 HIGH,variable attribute,<LONGITUDE>:reference_datum,is a string,if <LONGITUDE> exists,,,'We''ll check values in a future version'
 ,,,,,,,
 MED,variable,<LATITUDE>,is type Double or Float,if exists,,,'For now it is not mandatory to have a latitude variable. <LATITUDE> is any variable that has 1) variable name in _possibley list (cf/util.py), OR  2) standard_name="latitude", OR  3) axis="Y", OR  4) units in _possibleyunits list. It doesn''t have to be called “LATITUDE”.'
