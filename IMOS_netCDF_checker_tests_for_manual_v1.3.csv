@@ -14,7 +14,7 @@ HIGH,global attribute,geospatial_lon_min/max,'value matches longitude range in d
 HIGH,global attribute,geospatial_vertical_min/max,value matches depth/height range in data,if <VERTICAL> exists,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. Fails if no vertical coordinate variable. QC not taken into account! '
 HIGH,global attribute,time_coverage_start/end,'value matches time range in data, format "YYYY-MM-DDThh:mm:ssZ"',if <TIME> exists,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. QC not taken into account! '
 HIGH,global attribute,data_centre,value is "eMarine Information Infrastructure (eMII)",,,,
-HIGH,global attribute,data_centre_email,value is "info@emii.org.au”,,,,
+HIGH,global attribute,data_centre_email,value is "info@emii.org.au",,,,
 HIGH,global attribute,author,is a string,,,,
 HIGH,global attribute,principal_investigator,is a string,,,,
 HIGH,global attribute,citation,is a string,,,,Not checking value for now
