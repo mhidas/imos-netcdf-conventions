@@ -87,9 +87,7 @@ HIGH,variable,<DATA>,'has at least one of the dimensions (time, lat, lon, depth)
 DONE (CF),variable attribute,<DATA>:standard_name,value is valid CF standard name,if exists,Y,,
 HIGH,variable attribute,<DATA>:units,is a string,if exists,,,'For dimensionless quantities, CF only allows a few options (“1”, “percent”, “1e-3”), otherwise attribute should not be present.'
 DONE (CF),,<DATA>:units,value is a valid CF unit,if exists,Y,,
-HIGH,variable attribute,<DATA>:_FillValue,has same data type as the variable,,,,
-HIGH,variable attribute,<DATA>:valid_min,has same data type as the variable,if exists,,,
-HIGH,variable attribute,<DATA>:valid_max,has same data type as the variable,if exists,,,
+HIGH,variable attribute,<DATA>:_FillValue,exists,,,,
 DONE (CF),variable attribute,<DATA>:ancillary_variables,all variables listed in value exist in file,if exists,Y,,
 LOW,variable attribute,<DATA>:quality_control_set,'value is one of (1, 2, 3, 4), integer type',if exists,,,
 ,,,,,,,
