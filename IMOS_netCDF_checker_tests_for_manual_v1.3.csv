@@ -75,9 +75,9 @@ MED,variable,<VERTICAL>,is type Double or Float,if exists,,,'For now it is not m
 LOW,variable,<VERTICAL>,variable name includes “DEPTH” or “HEIGHT” (uppercase version of standard_name),if exists,,,
 HIGH,variable attribute,<VERTICAL>:standard_name,value is "depth" or “height”,if <VERTICAL> exists,,,
 LOW,variable attribute,<VERTICAL>:long_name,value includes the standard_name (case insensitive),if <VERTICAL> exists,,,
-HIGH,variable attribute,<VERTICAL>:units,value is a valid CF distance unit,if <VERTICAL> exists,(Y),,
+HIGH,variable attribute,<VERTICAL>:units,value is a valid CF distance unit,if <VERTICAL> exists,(Y),,'CF only checks it is valid in UDUNITS and consistent with standard_name, if provided'
 HIGH,variable attribute,<VERTICAL>:axis,value is "Z",if <VERTICAL> exists,(Y),,'CF checker checks value if axis exists, but ignores it if it doesn''t exist'
-HIGH,variable attribute,<VERTICAL>:positive,'value is "down" or “up”, consistent with standard_name',if <VERTICAL> exists,,,'“down” for standard_name “depth, “up” for “height”'
+HIGH,variable attribute,<VERTICAL>:positive,'value is "down" or “up”, consistent with standard_name',if <VERTICAL> exists,(Y),,'“down” for standard_name “depth, “up” for “height” (CF cheks it''s one of the two values, but not consistency with standard_name)'
 HIGH,variable attribute,<VERTICAL>:valid_min,exists,if <VERTICAL> exists,,,
 HIGH,variable attribute,<VERTICAL>:valid_max,exists,if <VERTICAL> exists,,,
 HIGH,variable attribute,<VERTICAL>:reference_datum,is a string,if <VERTICAL> exists,,,'We''ll check values in a future version'
@@ -85,7 +85,7 @@ HIGH,variable attribute,<VERTICAL>:reference_datum,is a string,if <VERTICAL> exi
 HIGH,variable,<DATA>,at least one data variable exists in the file,,,,'Not mentioned in the manual, but a reasonable basic check. Use CFBaseCheck._find_data_vars (in cf/cf.py) to identify all <DATA> variables, i.e. vars that are not coordinate or anciallary variables.'
 HIGH,variable,<DATA>,'has at least one of the dimensions (time, lat, lon, depth)',,,,'Not mentioned in the manual, but a reasonable basic check. Can''t be any more specific until we look at featureType'
 DONE (CF),variable attribute,<DATA>:standard_name,value is valid CF standard name,if exists,Y,,
-,,<DATA>:units,value is a valid CF unit,if exists,Y,,'For dimensionless quantities, CF only allows a few options (“1”, “percent”, “1e-3”), otherwise attribute should not be present.'
+DONE (CF),,<DATA>:units,value is a valid CF unit,if exists,Y,,'For dimensionless quantities, CF only allows a few options (“1”, “percent”, “1e-3”), otherwise attribute should not be present.'
 HIGH,variable attribute,<DATA>:_FillValue,exists,,,,
 DONE (CF),variable attribute,<DATA>:ancillary_variables,all variables listed in value exist in file,if exists,Y,,
 LOW,variable attribute,<DATA>:quality_control_set,'value is one of (1, 2, 3, 4), integer type',if exists,,,
