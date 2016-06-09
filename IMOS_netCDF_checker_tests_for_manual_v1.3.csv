@@ -83,7 +83,7 @@ HIGH,variable attribute,<VERTICAL>:valid_max,exists,if <VERTICAL> exists,,,
 HIGH,variable attribute,<VERTICAL>:reference_datum,is a string,if <VERTICAL> exists,,,'We''ll check values in a future version'
 ,,,,,,,
 HIGH,variable,<DATA>,at least one data variable exists in the file,,,,'Not mentioned in the manual, but a reasonable basic check. Use CFBaseCheck._find_data_vars (in cf/cf.py) to identify all <DATA> variables, i.e. vars that are not coordinate or anciallary variables.'
-HIGH,variable,<DATA>,'has at least one of the dimensions (time, lat, lon, depth)',,,,'Not mentioned in the manual, but a reasonable basic check. Can''t be any more specific until we look at featureType'
+REMOVED,variable,<DATA>,'has at least one of the dimensions (time, lat, lon, depth)',,,,REMOVED! Not mentioned in the manual. Does not apply to all files.
 DONE (CF),variable attribute,<DATA>:standard_name,value is valid CF standard name,if exists,Y,,
 DONE (CF),,<DATA>:units,value is a valid CF unit,if exists,Y,,'For dimensionless quantities, CF only allows a few options (“1”, “percent”, “1e-3”), otherwise attribute should not be present.'
 HIGH,variable attribute,<DATA>:_FillValue,exists,,,,
