@@ -11,7 +11,7 @@ Version,Priority,Test type,Target,Check that,Only check if,CF 1.6,ACDD 1.1,Comme
 1.3,HIGH,global attribute,naming_authority,value is "IMOS",,,,
 1.3,HIGH,global attribute,geospatial_lat_min/max,'value matches latitude range in data, numeric type',if <LATITUDE> exists,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. QC not taken into account! '
 1.3,HIGH,global attribute,geospatial_lon_min/max,'value matches longitude range in data, numeric type',if <LONGITUDE> exists,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. QC not taken into account! '
-1.3,HIGH,global attribute,geospatial_vertical_min/max,value matches depth/height range in data,if <VERTICAL> exists,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. Fails if no vertical coordinate variable. QC not taken into account! '
+1.3,HIGH,global attribute,geospatial_vertical_min/max,value matches depth/height range in data,if <VERTICAL> exists AND featureType defined,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. Fails if no vertical coordinate variable. QC not taken into account! '
 1.3,HIGH,global attribute,time_coverage_start/end,'value matches time range in data, format "YYYY-MM-DDThh:mm:ssZ"',if <TIME> exists,,Y,'ACDD checks existence and approximate match against data, with MEDIUM priority. QC not taken into account! '
 1.3,HIGH,global attribute,data_centre,value is "eMarine Information Infrastructure (eMII)" or "Australian Ocean Data Network (AODN)",,,,
 1.3,HIGH,global attribute,data_centre_email,value is "info@emii.org.au” or "info@aodn.org.au",,,,
@@ -38,7 +38,7 @@ Version,Priority,Test type,Target,Check that,Only check if,CF 1.6,ACDD 1.1,Comme
 ,,,,,,,,
 1.3,HIGH,variable attribute,<VAR>:long_name,is a string,,,,<VAR> refers to any variable
 1.3,HIGH,variable attribute,<VAR>:_FillValue,has same data type as the variable,if exists,,,
-1.4,MED,variable attribute,<VAR>:_FillValue,'value is a real number, i.e. not NaN',if exists,,,Maybe low priority?
+1.4,MED,variable attribute,<VAR>:_FillValue,'value is a real number, i.e. not NaN',if exists,,,
 1.3,HIGH,variable attribute,<VAR>:valid_min,has same data type as the variable,if exists,,,
 1.3,HIGH,variable attribute,<VAR>:valid_max,has same data type as the variable,if exists,,,
 ,,,,,,,,
@@ -52,7 +52,8 @@ Version,Priority,Test type,Target,Check that,Only check if,CF 1.6,ACDD 1.1,Comme
 1.3,HIGH,variable attribute,<TIME>:standard_name,value is "time",if <TIME> exists,,,
 1.3,LOW,variable attribute,<TIME>:long_name,value includes the word "time" (case insensitive),if <TIME> exists,,,
 1.3,DONE (CF),variable attribute,<TIME>:units,value is a valid CF time unit,if <TIME> exists,Y,,DONE in CF checker
-1.4,MED,variable attribute,<TIME>:units,value starts with "days” and reference time is YYYY-MM-DD 00:00:00 UTC,if <TIME> exists,,,Can we allow 1900 or other years as a reference date?
+1.4,MED,variable attribute,<TIME>:units,reference time is in UTC,if <TIME> exists,,,Check that units & data type give sufficient time precision? (at least 1 second?)
+1.4,LOW,variable attribute,<TIME>:units,value starts with "days” and reference time is 1950-01-01 00:00:00 UTC,if <TIME> exists,,,
 1.3,HIGH,variable attribute,<TIME>:axis,value is "T",if <TIME> exists,(Y),,'CF checker checks value if axis exists, but ignores it if it doesn''t exist'
 1.3,HIGH,variable attribute,<TIME>:valid_min,exists,if <TIME> exists,,,
 1.3,HIGH,variable attribute,<TIME>:valid_max,exists,if <TIME> exists,,,
@@ -79,8 +80,7 @@ Version,Priority,Test type,Target,Check that,Only check if,CF 1.6,ACDD 1.1,Comme
 1.3,HIGH,variable attribute,<LATITUDE>:reference_datum,is a string,if <LATITUDE> exists,,,'We''ll check values in a future version'
 ,,,,,,,,
 1.3,MED,variable,<VERTICAL>,is type Double or Float,if exists,,,'For now it is not mandatory to have a vertical coordinate variable. Use a helper function similar to is_vertical_coordinate (in cf/util.py) to identify a <VERTICAL> variable, but exclude pressure vars (i.e. variable name or standard_name is “depth” or “height” (case-insensitive), OR axis="Z", OR positive attribute is “up” or “down”). It doesn''t have to be called “DEPTH” or “HEIGHT”.'
-1.3,LOW,variable,<VERTICAL>,variable name includes “DEPTH” or “HEIGHT” (uppercase version of standard_name),if exists,,,
-1.3,HIGH,variable attribute,<VERTICAL>:standard_name,value is "depth" or “height”,if <VERTICAL> exists,,,Allow pressure as vertical variable?
+1.3,HIGH,variable attribute,<VERTICAL>:standard_name,value is "depth" or “height”,if <VERTICAL> exists,,,
 1.3,LOW,variable attribute,<VERTICAL>:long_name,value includes the standard_name (case insensitive),if <VERTICAL> exists,,,
 1.3,HIGH,variable attribute,<VERTICAL>:units,value is a valid CF distance unit,if <VERTICAL> exists,(Y),,'CF only checks it is valid in UDUNITS and consistent with standard_name, if provided'
 1.3,HIGH,variable attribute,<VERTICAL>:axis,value is "Z",if <VERTICAL> exists,(Y),,'CF checker checks value if axis exists, but ignores it if it doesn''t exist'
@@ -108,8 +108,8 @@ Version,Priority,Test type,Target,Check that,Only check if,CF 1.6,ACDD 1.1,Comme
 1.4,LOW,variable attribute,<QC>:flag_values,Check that values match the quality_control_conventions specified,if <QC> exists,,,'IMOS NetCDF manual v1.4, Reference Tables B, C, E, F'
 1.3,DONE (CF),variable attribute,<QC>:flag_meanings,'is a string of blank-separated meanings, same number as flag_values',if <QC> exists,Y,,
 1.4,LOW,variable attribute,<QC>:flag_meanings,Check that values match the quality_control_conventions specified,if <QC> exists,,,'IMOS NetCDF manual v1.4, Reference Tables B, C, E, F'
-1.4,MED,variable attribute,<QC>:quality_control_global,is a string,if exists,,,Only relevant for Argo?
-1.4,MED,variable attribute,<QC>:quality_control_global_conventions,is a string,if exists,,,Only relevant for Argo?
+1.4,MED,variable attribute,<QC>:quality_control_global,is a string,if either quality_control_global or quality_control_global_conventions exists,,,'i.e. if either of these exists, the other should too, and they should be strings'
+1.4,MED,variable attribute,<QC>:quality_control_global_conventions,is a string,if either quality_control_global or quality_control_global_conventions exists,,,'i.e. if either of these exists, the other should too, and they should be strings'
 ,,,,,,,,
 1.3,HIGH,file name,file name,extension is "nc",,,,
 1.3,HIGH,file name,file name,'name contains 6 to 10 fields, separated by "_"',,,,Not including extension. Fields made up of characters [a-zA-Z0-9-].
