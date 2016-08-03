@@ -86,14 +86,14 @@ Version,Priority,Test type,Target,Check that,Only check if,CF 1.6,ACDD 1.1,Comme
 1.3,HIGH,variable attribute,<VERTICAL>:positive,'value is "down" or “up”, consistent with standard_name',if <VERTICAL> exists,(Y),,'“down” for standard_name “depth, “up” for “height” (CF cheks it''s one of the two values, but not consistency with standard_name)'
 1.3,HIGH,variable attribute,<VERTICAL>:valid_min,exists,if <VERTICAL> exists,,,
 1.3,HIGH,variable attribute,<VERTICAL>:valid_max,exists,if <VERTICAL> exists,,,
-1.4,HIGH,variable attribute,<VERTICAL>:reference_datum,'value is one of (“Mean Sea Level (MSL)”, “sea surface”, “sea bottom”, “sensor”)',if <VERTICAL> exists,,,
+1.3,HIGH,variable attribute,<VERTICAL>:reference_datum,'value is one of (“Mean Sea Level (MSL)”, “sea surface”, “sea bottom”, “sensor”)',if <VERTICAL> exists,,,
 ,,,,,,,,
-1.4,MED,variable,<PRESSURE_AXIS>,is type Double or Float,if exists,,,'This applies only to cases where a pressure variable is used as a vertical axis, i.e. identified by (standard_name or units attribute) AND (existence of axis attribute OR being an auxiliary coordinate variable)'
-1.4,HIGH,variable attribute,<PRESSURE_AXIS>:standard_name,'value is "sea_water_pressure", “sea_water_pressure_due_to_sea_water” or “air_pressure”',if <PRESSURE_AXIS> exists,,,
-1.4,HIGH,variable attribute,<PRESSURE_AXIS>:units,value is a valid CF pressure unit,if <PRESSURE_AXIS> exists,(Y),,'CF only checks it is valid in UDUNITS and consistent with standard_name, if provided?'
-1.4,HIGH,variable attribute,<PRESSURE_AXIS>:axis,value is "Z",if exists,,,
-1.4,HIGH,variable attribute,<PRESSURE_AXIS>:valid_min,exists,if <PRESSURE_AXIS> exists,,,
-1.4,HIGH,variable attribute,<PRESSURE_AXIS>:valid_max,exists,if <PRESSURE_AXIS> exists,,,
+1.3,MED,variable,<PRESSURE_AXIS>,is type Double or Float,if exists,,,'This applies only to cases where a pressure variable is used as a vertical axis, i.e. identified by (standard_name or units attribute) AND (existence of axis attribute OR being an auxiliary coordinate variable)'
+1.3,HIGH,variable attribute,<PRESSURE_AXIS>:standard_name,'value is "sea_water_pressure", “sea_water_pressure_due_to_sea_water” or “air_pressure”',if <PRESSURE_AXIS> exists,,,
+1.3,HIGH,variable attribute,<PRESSURE_AXIS>:units,value is a valid CF pressure unit,if <PRESSURE_AXIS> exists,(Y),,'CF only checks it is valid in UDUNITS and consistent with standard_name, if provided?'
+1.3,HIGH,variable attribute,<PRESSURE_AXIS>:axis,value is "Z",if exists,,,
+1.3,HIGH,variable attribute,<PRESSURE_AXIS>:valid_min,exists,if <PRESSURE_AXIS> exists,,,
+1.3,HIGH,variable attribute,<PRESSURE_AXIS>:valid_max,exists,if <PRESSURE_AXIS> exists,,,
 ,,,,,,,,
 1.3,HIGH,variable,<DATA>,at least one data variable exists in the file,,,,'Not mentioned in the manual, but a reasonable basic check. Use CFBaseCheck._find_data_vars (in cf/cf.py) to identify all <DATA> variables, i.e. vars that are not coordinate or anciallary variables.'
 1.3,DONE (CF),variable attribute,<DATA>:standard_name,value is valid CF standard name,if exists,Y,,
