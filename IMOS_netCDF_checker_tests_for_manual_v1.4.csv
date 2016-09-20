@@ -105,24 +105,20 @@ Version,Priority,Test type,Target,Check that,Only check if,CF 1.6,ACDD 1.1,Comme
 1.3,HIGH,variable attribute,<DATA>:_FillValue,exists,,,,
 1.4r,REMOVED,variable attribute,<DATA>:_FillValue,(no longer mandatory),,,,
 1.3,DONE (CF),variable attribute,<DATA>:ancillary_variables,all variables listed in value exist in file,if exists,Y,,
-1.3,LOW,variable attribute,<DATA>:quality_control_set,'value is one of (1, 2, 3, 4), integer type',if exists,,,
-1.4r,REMOVED,variable attribute,<DATA>:quality_control_set,(No longer required),,,,
 1.4a,HIGH,variable attribute,<DATA>:coordinates,'value is a blank-separated list of variable names, which must be present in the file',,(Y),,CF only checks this for DSG files
 ,,,,,,,,
 1.3,HIGH,variable,<QC>,variable name matches “<DATA>_quality_control” for a variable in the file named  “<DATA>”,if exists,,,'<QC> is any quality-control variable. Identify these as any variable that 1) has a name that ends in “_quality_control”, OR 2) standard_name ends in "status_flag" OR long_name contains "status_flag" or "quality flag",  OR 3) has a flag_values, or flag_meanings attribute. The associated <DATA> variable is defined by this rule.'
 1.3,HIGH,variable,<QC>,has same dimensions as associated <DATA> variable,if exists,,,
 1.3,MED,variable attribute,<DATA>:ancillary_variables,value includes name of <QC> varliabe,if <QC> exists,,,'i.e. if <QC> variable exists, it must be listed in the associated <DATA> variable''s ancillary_variables attribute'
 1.3,HIGH,variable attribute,<QC>:standard_name,value = (standard_name of the <DATA> variable) + "status_flag",if <DATA>:standard_name exists,(Y),,'CF checker validates standard_name but doesn''t require it to exist or have "status_flag"'
-1.3,MED,variable attribute,<QC>:quality_control_set,'value is one of (1, 2, 3, 4), integer type',if <QC> exists,,,
-1.4r,REMOVED,variable attribute,<QC>:quality_control_set,(No longer required),,,,
-1.3,MED,variable attribute,<QC>:quality_control_conventions,value matches description corresponding to quality_control_set,if <QC> exists,,,'1:“IMOS standard set using the IODE flags”,  2:“ARGO quality control procedure”,  3:“BOM (SST and Air-Sea flux) quality control procedure”,  4:“WOCE quality control procedure (Multidisciplinary Underway Network
+1.3,MED,variable attribute,<QC>:quality_control_conventions,value matches one of the 4 possible values,if <QC> exists,,,'1:“IMOS standard set using the IODE flags”,  2:“ARGO quality control procedure”,  3:“BOM (SST and Air-Sea flux) quality control procedure”,  4:“WOCE quality control procedure (Multidisciplinary Underway Network
 – CO 2 measurements)”  (from IMOS NetCDF manual v1.3, Reference Table B, p.49)'
-1.4u,MED,variable attribute,<QC>:quality_control_conventions,value matches one of the 4 possible values,if <QC> exists,,,'(“IMOS standard flags”, “ARGO quality control procedure”, “BOM (SST and Air-Sea flux) quality control procedure”, “WOCE quality control procedure”), IMOS NetCDF manual v1.4, Reference Table A'
+1.4u,MED,variable attribute,<QC>:quality_control_conventions,value matches one of the 4 possible values (different from 1.3),if <QC> exists,,,'(“IMOS standard flags”, “ARGO quality control procedure”, “BOM (SST and Air-Sea flux) quality control procedure”, “WOCE quality control procedure”), IMOS NetCDF manual v1.4, Reference Table A'
 1.3,DONE (CF),variable attribute,<QC>:flag_values,is a list of values of the same type as the <QC> variable,if <QC> exists,Y,,
-1.3,LOW,variable attribute,<QC>:flag_values,Check that values match the quality_control_set specified,if <QC> exists,,,'IMOS NetCDF manual v1.3, Reference Tables C, D, F, G'
+1.3,LOW,variable attribute,<QC>:flag_values,Check that values match the quality_control_conventions specified,if <QC> exists,,,'IMOS NetCDF manual v1.3, Reference Tables C, D, F, G'
 1.4u,LOW,variable attribute,<QC>:flag_values,Check that values match the quality_control_conventions specified,if <QC> exists,,,'IMOS NetCDF manual v1.4, Reference Tables B, C, E, F'
 1.3,DONE (CF),variable attribute,<QC>:flag_meanings,'is a string of blank-separated meanings, same number as flag_values',if <QC> exists,Y,,
-1.3,LOW,variable attribute,<QC>:flag_meanings,Check that meanings match the quality_control_set specified,if <QC> exists,,,'IMOS NetCDF manual v1.3, Reference Tables C, D, F, G'
+1.3,LOW,variable attribute,<QC>:flag_meanings,Check that values match the quality_control_conventions specified,if <QC> exists,,,'IMOS NetCDF manual v1.3, Reference Tables C, D, F, G'
 1.4u,LOW,variable attribute,<QC>:flag_meanings,Check that values match the quality_control_conventions specified,if <QC> exists,,,'IMOS NetCDF manual v1.4, Reference Tables B, C, E, F'
 1.4a,MED,variable attribute,<QC>:quality_control_global,is a string,if either quality_control_global or quality_control_global_conventions exists,,,'i.e. if either of these exists, the other should too, and they should be strings'
 1.4a,MED,variable attribute,<QC>:quality_control_global_conventions,is a string,if either quality_control_global or quality_control_global_conventions exists,,,'i.e. if either of these exists, the other should too, and they should be strings'
